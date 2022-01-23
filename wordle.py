@@ -74,7 +74,8 @@ def on_key_press(char):
 
 @config(title="Wordle - A daily word game", description="A PyWebIO implementation", css_style=CSS)
 def main():
-    put_markdown('# WORDLE').style('text-align:center')
+    put_markdown('# WORDLE \n A Pure PyWebIO implementation of Wordle game, by using PyWebIO library. '
+                 '[Source code](https://github.com/pywebio/wordle/blob/master/wordle.py)').style('text-align:center')
 
     grid = [
         [put_scope(f's-{x}-{y}', content=put_text(' ')) for y in range(WORD_LEN)]
