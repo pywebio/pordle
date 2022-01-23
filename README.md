@@ -9,6 +9,7 @@ python wordle.py
 ## Limitations
 
  - A fake word checker
- - No statistics
  - Hard-coded the hidden word 
+ - No statistics
+ - No limit to the number of times user can play per day
 
