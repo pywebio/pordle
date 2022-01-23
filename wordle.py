@@ -1,6 +1,6 @@
 from pywebio.output import *
-from pywebio.session import run_js
-from pywebio import session, start_server, config
+from pywebio.session import run_js, local as session_local
+from pywebio import start_server, config
 import time
 
 WORD_LEN = 5
@@ -24,52 +24,54 @@ def is_word(s):  # todo: implement this function
 
 
 def on_key_press(char):
-    if session.local.curr_row >= MAX_TRY or session.local.game_pass:
+    if session_local.curr_row >= MAX_TRY or session_local.game_pass:
         return
 
     # show the char in grid
-    with use_scope(f's-{session.local.curr_row}-{len(session.local.curr_word)}', clear=True):
+    with use_scope(f's-{session_local.curr_row}-{len(session_local.curr_word)}', clear=True):
         put_text(char)
 
-    session.local.curr_word += char
-    if len(session.local.curr_word) == WORD_LEN:  # submit a word guess
-        if not is_word(session.local.curr_word):
+    session_local.curr_word += char
+    if len(session_local.curr_word) == WORD_LEN:  # submit a word guess
+        if not is_word(session_local.curr_word):
             toast('Not in word list!', color='error')
-            session.local.curr_word = ''
+            session_local.curr_word = ''
             for i in range(WORD_LEN):
-                with use_scope(f's-{session.local.curr_row}-{i}', clear=True): put_text(' ', inline=True)
+                with use_scope(f's-{session_local.curr_row}-{i}', clear=True): put_text(' ', inline=True)
         else:
-            for idx, c in enumerate(session.local.curr_word):
+            for idx, c in enumerate(session_local.curr_word):
                 time.sleep(0.2)
                 if TODAY_WORD[idx] == c:
-                    session.local.green_chars.add(c)
+                    session_local.green_chars.add(c)
                     run_js('$("button:contains(%s)").css({"background-color":"#6aaa64", "color":"white"})' % c)
                     text_bg = '#6aaa64'
-                    session.local.game_result += '🟩'
+                    session_local.game_result += '🟩'
                 elif c in TODAY_WORD:
                     text_bg = '#c9b458'
-                    session.local.game_result += '🟨'
-                    if c not in session.local.green_chars:
+                    session_local.game_result += '🟨'
+                    if c not in session_local.green_chars:
                         run_js('$("button:contains(%s)").css({"background-color":"#c9b458", "color":"white"})' % c)
                 else:
                     text_bg = '#787c7e'
-                    session.local.game_result += '⬜'
+                    session_local.game_result += '⬜'
                     run_js('$("button:contains(%s)").css({"background-color":"#787c7e", "color":"white"})' % c)
 
-                with use_scope(f's-{session.local.curr_row}-{idx}', clear=True):
+                with use_scope(f's-{session_local.curr_row}-{idx}', clear=True):
                     put_text(c).style(f'color:white;background:{text_bg}')
 
-            session.local.game_result += '\n'
-            if session.local.curr_word == TODAY_WORD:
+            session_local.game_result += '\n'
+            if session_local.curr_word == TODAY_WORD:
                 toast('Genius', color='success')
-                session.local.game_pass = True
+                session_local.game_pass = True
 
-            session.local.curr_row += 1
-            session.local.curr_word = ''
+            session_local.curr_row += 1
+            session_local.curr_word = ''
 
-        if session.local.game_pass:
-            message = f'Wordle {session.local.curr_row}/{MAX_TRY}\n\n' + session.local.game_result
-            popup("Game Result", put_text(message).style('text-align: center'), size='small')
+        if session_local.game_pass:
+            message = f'Wordle {session_local.curr_row}/{MAX_TRY}\n' + session_local.game_result
+            with popup("Game Result", size='small'):
+                put_text(message).style('text-align: center')
+                put_button('Share', color='success', onclick=lambda: toast('Copied to clipboard') or run_js("""navigator.clipboard.write([new ClipboardItem({"text/plain":new Blob([text],{type:"text/plain"})})]);""", text=message)).style('text-align: center')
 
 
 @config(title="Wordle - A daily word game", description="A PyWebIO implementation", css_style=CSS)
@@ -89,12 +91,12 @@ def main():
     ]
     put_column(keyboard).style('text-align: center')
 
-    session.local.curr_row = 0
-    session.local.curr_word = ''
-    session.local.green_chars = set()
-    session.local.game_pass = False
-    session.local.game_result = ''
+    session_local.curr_row = 0
+    session_local.curr_word = ''
+    session_local.green_chars = set()
+    session_local.game_pass = False
+    session_local.game_result = ''
 
 
 if __name__ == '__main__':
-    start_server(main, port=8080, debug=True, remote_access=True)
+    start_server(main, port=8080, debug=True)
