@@ -1,7 +1,8 @@
+import time
+from pywebio import start_server, config
 from pywebio.output import *
 from pywebio.session import run_js, local as session_local
-from pywebio import start_server, config
-import time
+from words import word_list
 
 WORD_LEN = 5
 MAX_TRY = 6
@@ -19,10 +20,6 @@ th>div,td>div {width:50px; height:50px}.btn-light {background-color:#d3d6da;}
 """
 
 
-def is_word(s):  # todo: implement this function
-    return 'X' not in s
-
-
 def on_key_press(char):
     if session_local.curr_row >= MAX_TRY or session_local.game_pass:
         return
@@ -37,11 +34,11 @@ def on_key_press(char):
 
     session_local.curr_word += char
     if len(session_local.curr_word) == WORD_LEN:  # submit a word guess
-        if not is_word(session_local.curr_word):
+        if session_local.curr_word.lower() not in word_list:
             toast('Not in word list!', color='error')
             session_local.curr_word = ''
             for i in range(WORD_LEN):
-                with use_scope(f's-{session_local.curr_row}-{i}', clear=True): put_text(' ', inline=True)
+                clear(f's-{session_local.curr_row}-{i}')
         else:
             for idx, c in enumerate(session_local.curr_word):
                 time.sleep(0.2)
