@@ -27,6 +27,10 @@ def on_key_press(char):
     if session_local.curr_row >= MAX_TRY or session_local.game_pass:
         return
 
+    if char == '◀':
+        session_local.curr_word = session_local.curr_word[:-1]
+        return clear(f's-{session_local.curr_row}-{len(session_local.curr_word)}')
+
     # show the char in grid
     with use_scope(f's-{session_local.curr_row}-{len(session_local.curr_word)}', clear=True):
         put_text(char)
@@ -87,7 +91,7 @@ def main():
 
     keyboard = [
         put_buttons([dict(label=c, value=c, color='light') for c in keys], on_key_press, serial_mode=True)
-        for keys in ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM']
+        for keys in ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM◀']
     ]
     put_column(keyboard).style('text-align: center')
 
