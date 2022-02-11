@@ -3,7 +3,7 @@
 ## Run
 ```bash
 pip install pywebio
-python wordle.py
+python pordle.py
 ```
 
 ## Limitations
