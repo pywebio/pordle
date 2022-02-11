@@ -1,4 +1,3 @@
-# setup python language server
 kind: pipeline
 type: exec
 name: default
