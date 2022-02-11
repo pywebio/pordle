@@ -1,4 +1,4 @@
-# A PyWebIO implementation of Wordle game
+# PORDLE - A PyWebIO implementation of Wordle game
 
 ## Run
 ```bash
