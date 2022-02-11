@@ -7,7 +7,7 @@ from words import word_list
 WORD_LEN = 5
 MAX_TRY = 6
 
-TODAY_WORD = 'HAPPY'  # need be upper
+TODAY_WORD = 'HAPPY'  # need to be uppercase
 
 assert len(TODAY_WORD) == WORD_LEN
 
@@ -69,16 +69,16 @@ def on_key_press(char):
             session_local.curr_word = ''
 
         if session_local.game_pass:
-            message = f'Wordle {session_local.curr_row}/{MAX_TRY}\n' + session_local.game_result
+            message = f'Pordle {session_local.curr_row}/{MAX_TRY}\n' + session_local.game_result
             with popup("Game Result", size='small'):
                 put_text(message).style('text-align: center')
                 put_button('Share', color='success', onclick=lambda: toast('Copied to clipboard') or run_js("""navigator.clipboard.write([new ClipboardItem({"text/plain":new Blob([text],{type:"text/plain"})})]);""", text=message)).style('text-align: center')
 
 
-@config(title="Wordle - A daily word game", description="A PyWebIO implementation", css_style=CSS)
+@config(title="PORDLE - A daily game to guess Python package names", description="A PyWebIO implementation", css_style=CSS)
 def main():
-    put_markdown('# WORDLE \n A pure python implementation of Wordle game, by using PyWebIO library. '
-                 '[Source code](https://github.com/pywebio/wordle/blob/master/wordle.py)').style('text-align:center')
+    put_markdown('# PORDLE \n A pure python implementation of a Wordle-like game, using PyWebIO library. '
+                 '[Source code](https://github.com/pywebio/pordle/blob/master/pordle.py)').style('text-align:center')
 
     grid = [
         [put_scope(f's-{x}-{y}', content=put_text(' ')) for y in range(WORD_LEN)]
