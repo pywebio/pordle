@@ -18,5 +18,5 @@ python pordle.py
 
 ### Launch Pordle to the cloud on *pyweb.io*
 - Register on https://signup.pyweb.io
-- Copy `pordle.py` and `words.py` over in the cloud IDE
+- Copy `pordle.py` over in the cloud IDE
 - Click the launch button
