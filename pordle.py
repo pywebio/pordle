@@ -2,14 +2,11 @@ import time
 from pywebio import start_server, config
 from pywebio.output import *
 from pywebio.session import run_js, local as session_local
-from words import word_list
 
-WORD_LEN = 5
+TODAY_WORD = 'PYWEBIO'  # need to be uppercase
+
 MAX_TRY = 6
-
-TODAY_WORD = 'HAPPY'  # need to be uppercase
-
-assert len(TODAY_WORD) == WORD_LEN
+WORD_LEN = len(TODAY_WORD)
 
 CSS = """
 .pywebio {padding-top: 0} .markdown-body table {display:table; width:250px; margin:10px auto;}
@@ -19,6 +16,11 @@ th>div,td>div {width:50px; height:50px}.btn-light {background-color:#d3d6da;}
 @media (max-width: 355px) {.btn{padding:0.375rem 0.4rem;}}
 """
 
+# To check if a user's input word is actually a legit word
+# We just implement a placeholder function in this example
+# If a guess word is UNHAPPY, toast a message
+def is_word(s):  
+    return 'UNHAPPY' not in s
 
 def on_key_press(char):
     if session_local.curr_row >= MAX_TRY or session_local.game_pass:
@@ -34,7 +36,7 @@ def on_key_press(char):
 
     session_local.curr_word += char
     if len(session_local.curr_word) == WORD_LEN:  # submit a word guess
-        if session_local.curr_word.lower() not in word_list:
+        if not is_word(session_local.curr_word):
             toast('Not in word list!', color='error')
             session_local.curr_word = ''
             for i in range(WORD_LEN):
