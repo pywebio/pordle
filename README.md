@@ -1,5 +1,8 @@
 # PORDLE - A PyWebIO implementation of Wordle game
 
+### A live veresion of Pordle that lets you guess Python package name:
+https://aptx314.pyweb.io/pordle/app/
+
 ### Notes
  - The Pordle word is hard-coded
  - No statistics
