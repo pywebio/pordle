@@ -16,7 +16,7 @@ pip install pywebio
 python pordle.py
 ```
 
-### Launch the app on *pyweb.io*
+### Launch Pordle to the cloud on *pyweb.io*
 - Register on https://signup.pyweb.io
 - Copy `pordle.py` and `words.py` over in the cloud IDE
 - Click the launch button
