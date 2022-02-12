@@ -8,6 +8,7 @@ TODAY_WORD = 'PYWEBIO'  # need to be uppercase
 MAX_TRY = 6
 WORD_LEN = len(TODAY_WORD)
 
+
 CSS = """
 .pywebio {padding-top: 0} .markdown-body table {display:table; width:250px; margin:10px auto;}
 .markdown-body table th, .markdown-body table td {font-weight:bold; padding:0; line-height:50px;}
@@ -16,11 +17,13 @@ th>div,td>div {width:50px; height:50px}.btn-light {background-color:#d3d6da;}
 @media (max-width: 355px) {.btn{padding:0.375rem 0.4rem;}}
 """
 
+
 # To check if a user's input word is actually a legit word
 # We just implement a placeholder function in this example
 # If a guess word is UNHAPPY, toast a message
 def is_word(s):  
     return 'UNHAPPY' not in s
+
 
 def on_key_press(char):
     if session_local.curr_row >= MAX_TRY or session_local.game_pass:
