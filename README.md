@@ -3,7 +3,9 @@
 ### A live veresion of Pordle that lets you guess Python package name:
 https://aptx314.pyweb.io/pordle/app/
 
+
 ### Notes
+- **To make `pordle.py` in this repo more beginner friendly, we simplified the implementation to around 100 lines of code. So, this is slightly different than what you see in our deployed version.**
  - The Pordle word is hard-coded
  - No statistics
  - Unlimited times user can play per day
