@@ -1,7 +1,7 @@
 # PORDLE - A PyWebIO implementation of Wordle game
 
 ### A live veresion of Pordle that lets you guess Python package name:
-http://pordle.net/
+https://pordle.net/
 
 
 ### Notes
