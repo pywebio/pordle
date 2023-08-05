@@ -1,0 +1,24 @@
+kind: pipeline
+type: exec
+name: default
+
+trigger:
+  branch:
+  - master
+  event:
+  - push
+
+steps:
+  - name: deploy
+    commands:
+      - |  # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#pipe-dockerfile-through-stdin
+        docker build -t pypi-pordle -f- . <<EOF
+        FROM python:3
+        WORKDIR /usr/src/app
+        ADD ./ .
+        RUN pip3 install --no-cache-dir -r requirements.txt
+        EXPOSE 8080
+        CMD python3 pordle.py
+        EOF
+      - docker rm -f wordle || exit 0
+      - docker run --restart=always --name=wordle -d pypi-pordle

@@ -1,7 +1,8 @@
 # PORDLE - A PyWebIO implementation of Wordle game
 
 ### A live veresion of Pordle that lets you guess Python package name:
-https://pordle.net/
+
+https://wordle.pywebio.online
 
 
 ### Notes
@@ -18,7 +19,3 @@ pip install pywebio
 python pordle.py
 ```
 
-### Launch Pordle to the cloud on *pyweb.io*
-- Register on https://signup.pyweb.io
-- Copy `pordle.py` over in the cloud IDE
-- Click the launch button
